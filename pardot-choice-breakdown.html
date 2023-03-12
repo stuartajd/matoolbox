@@ -18,6 +18,8 @@
 			font-weight: bold;
 			color: white; 
 		}
+
+		[v-cloak] { display: none; }
 	</style>
 </head>
 <body>
@@ -33,7 +35,7 @@
 			</a>
 		</div>
 	</header>
-	<main id="app" class="container mx-auto">
+	<main v-cloak id="app" class="container mx-auto">
 		<h2>Pardot choice breakdown</h2>
 		<p>Breakdown your data set to let it fit within Pardots criteria inputs.</p>
 

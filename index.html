@@ -20,6 +20,8 @@
             color: #212529;
 			font-weight: bold;
 		}
+
+        [v-cloak] { display: none; }
 	</style>
 </head>
 <body>
@@ -28,7 +30,7 @@
 			<h1>MAToolbox 🛠️</h1>
 		</div>
 	</header>
-	<main id="app" class="container mx-auto">
+	<main v-cloak id="app" class="container mx-auto">
 		<div v-for="tool of tools" class="card">
             <div class="card-body d-flex align-items-center justify-content-between">
                 <div>
