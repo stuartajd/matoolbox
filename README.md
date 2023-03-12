@@ -16,7 +16,8 @@ You should also add the tool information to the `tools` array within the `index.
 {
     header: "Unique tool title",
     description: "A brief description of the tool",
-    link: "/page-url.html"
+    link: "/page-url.html",
+    platform: "The MA platform this relates to" // EG: Pardot, Marketo
 },
 ```
 

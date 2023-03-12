@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+	<link rel="stylesheet" href="./styles.css">
+	<title>MAToolbox</title>
+</head>
+<body>
+	<header class="container py-4">
+		<div class="d-flex align-items-center justify-content-between">
+			<h1>MAToolbox 🛠️</h1>
+
+			<a href="/" class="btn btn-dark d-flex align-items-center fw-bold">
+				Home
+				<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+				</svg>
+			</a>
+		</div>
+	</header>
+	<main v-cloak id="app" class="container mx-auto">
+		<h2><span class="badge bg-secondary">Pardot</span> Auto Form Fill</h2>
+		<p>A bookmarklet script used to automatically fill in your details for Pardot forms.</p>
+		<p class="alert alert-info">
+			<strong>🤔 How does this work?</strong>
+			  
+			You can add this script within your bookmarks bar and then click it when you're on a Pardot form or just paste it into the browser console. It will automatically fill in the form with the data you've provided in the script.
+		</p>
+
+        <h3>Values to prefill</h3>
+        <div class="row mb-3">
+            <div v-for="(value, fieldId) in fields" class="col-md-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text fw-bold">{{fieldId}}</span>
+                    <input type="text" class="form-control" v-model="fields[fieldId]">
+                </div>
+            </div>
+
+            <div class="input-group mt-4 mb-3">
+                <span class="input-group-text fw-bold">Enter the fields API name</span>
+                <input type="text" class="form-control" v-model="fieldToAdd" placeholder="eg: first_name, last_name, email">
+                <button class="btn btn-outline-light" type="button" @click="addField">Add field</button>
+            </div>
+        </div>
+
+        <h3>Script</h3>
+        <textarea class="form-control mb-4 disable-resize" :value="script" @click="(event) => event.target.select()" readonly rows="8"></textarea>
+
+        <h3>Bookmarklet</h3>
+        <input type="text" :value="bookmarklet" class="form-control"  @click="(event) => event.target.select()" readonly>
+	</main>
+	<footer class="container py-4">
+		Made with ❤️ - <a href="https://github.com/stuartajd/matoolbox" class="link-info" target="_blank">see the project on GitHub</a>
+	</footer>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script>
+		var app = new Vue({
+		  el: '#app',
+		  data: {
+            fieldToAdd: '',
+            fields: {
+                first_name: 'Your name',
+                last_name: 'Your last name',
+                email: 'your@email.com',
+            }
+		  },
+		  computed: {
+            formFillScript() {
+                return `(function() {
+        if(!document.querySelector('#pardot-form')) return;
+
+        const fields = ${JSON.stringify(this.fields)};
+
+        document.querySelectorAll('.form-field').forEach(field => {
+            if(!field.classList[1]) return;
+            const fieldId = field.classList[1];
+            const elem = field.querySelector('input[type=text],textarea');
+            if(elem){
+                elem.value = fields[fieldId];
+                elem.dispatchEvent(new Event("change"));
+                return;
+            }
+
+            const select = field.querySelector('select');
+            if(select){
+                const option = [...select.querySelectorAll('option')].find(option => option.textContent.toLowerCase() === fieldId.toLowerCase());
+                select.value = option.value;
+                select.dispatchEvent(new Event("change"));
+                return;
+            }
+        });
+    })();`
+            },
+            script() {
+                // Get the fields
+                const fields = this.fields;
+                // Create the script
+                let script = `<script>${this.formFillScript + '</scr'}ipt>`;
+                // Return the script
+                return script;
+            },
+            bookmarklet() {
+                const minified = this.formFillScript.replace(/\s+/g, ' ').trim();
+                return `javascript:${minified}`;
+            }
+		  },
+		  methods: {
+            addField() {
+                if(!this.fieldToAdd.length) return;
+
+                this.$set(this.fields, this.fieldToAdd, '');
+                this.fieldToAdd = '';
+            }
+		  }
+		})
+	</script>		
+</body>
+</html>
