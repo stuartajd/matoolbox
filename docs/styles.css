@@ -1,0 +1,20 @@
+body {
+    color: #adb5bd;
+    background-color: #212529;
+    font-family: 'Inter', sans-serif!important;
+}
+
+.card-body {
+    color: #494949;
+}
+
+h1,h2,h3,h4 { 
+    font-weight: bold;
+    color: white; 
+}
+
+[v-cloak] { display: none }
+
+.disable-resize {
+    resize: none;
+}
