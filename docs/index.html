@@ -31,7 +31,7 @@
 		</div>
 	</header>
 	<main v-cloak id="app" class="container mx-auto">
-		<div v-for="tool of tools" class="card">
+		<div v-for="tool of toolList" class="card mb-3">
             <div class="card-body d-flex align-items-center justify-content-between">
                 <div>
                     <h2>{{tool.header}}</h2>
@@ -56,12 +56,17 @@
 		  el: '#app',
 		  data: {
 		    tools: [
-                {
-                    header: "Pardot Choice Breakdown",
-                    description: "Breakdown your data set to let it fit within Pardots criteria inputs.",
-                    link: "/pardot-choice-breakdown.html"
-                }
-            ]
+				{
+					header: "Pardot Choice Breakdown",
+					description: "Breakdown your data set to let it fit within Pardots criteria inputs.",
+					link: "/pardot-choice-breakdown.html"
+				}
+			]
+		  },
+		  computed: {
+			toolList() {
+				return this.tools.sort((a, b) => a.header.localeCompare(b.header));
+			}
 		  }
 		})
 	</script>		
