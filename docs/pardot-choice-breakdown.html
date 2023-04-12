@@ -31,7 +31,13 @@
 
 		<template v-if="outputData.length">
 			<h4>Your choices</h4>
-			<input @click="select" v-for="outputLine in outputData" :value="outputLine" class="form-control mb-3" type="text" readonly="true" />
+			
+			<div class="input-group mb-3" v-for="(outputLine, index) in outputData" :key="index">
+				<div class="input-group-prepend">
+					<span class="input-group-text">{{index + 1}}</span>
+				</div>
+				<input @click="select" :value="outputLine" class="form-control mb-3" type="text" readonly="true" />
+			</div>
 		</template>
 	</main>
 	<footer class="container py-4">
