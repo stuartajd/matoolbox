@@ -33,7 +33,7 @@
 			<h4>Your choices</h4>
 			
 			<div class="input-group mb-3" v-for="(outputLine, index) in outputData" :key="index">
-				<span class="input-group-text">{{index + 1}}</span>
+				<span class="input-group-text">#{{index + 1}}</span>
 				<input @click="select" :value="outputLine" class="form-control" type="text" readonly="true" />
 			</div>
 		</template>
