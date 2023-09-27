@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+	<script src="https://cdn.usefathom.com/script.js" data-site="VVJEPUZT" defer></script>
+	<link rel="stylesheet" href="./styles.css">
+	<title>MAToolbox</title>
+</head>
+<body>
+	<header class="container py-4">
+		<div class="d-flex align-items-center justify-content-between">
+			<h1>MAToolbox 🛠️</h1>
+
+			<a href="/" class="btn btn-dark d-flex align-items-center fw-bold">
+				Home
+				<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+				</svg>
+			</a>
+		</div>
+	</header>
+	<main class="container mx-auto">
+		<h2><span class="badge bg-secondary">Pardot</span> Salesforce Campaign Rule Group Mass Editor</h2>
+		<p>A script to mass edit all salesforce campaigns within a dynamic list or automation rule to be a single Salesforce campaign.</p>
+		<p class="alert alert-info">
+			<strong>🤔 How does this work?</strong>
+			  
+			You should open the dev tools on the page with the rules or rule groups already setup. Right click on the name of the dynamic list / automation rule and click 'Inspect'. <br /><br />
+
+			You should then copy the below script into the Console tab, updating the <code>campaignName</code> variable to include the name of the Salesforce campaign you wish to update all the existing dropdowns to be.<br /><br />
+
+			You can then press the 'Enter' key to run the script, it may take a second but all dropdowns should now select the requested campaign.<br /><br />
+
+			If you see a console error after pasting the script, the Salesforce campaign has not been found in the dropdown list. You should make sure it's spelt correctly and that it's currently set to active within Salesforce.
+		</p>
+		
+		<textarea class="form-control disable-resize" @click="(event) => event.target.select()" readonly rows="10">
+<script>
+	(function() {
+		const campaignName = 'Salesforce campaign name';
+
+		[...$0.closest('body.frontendApplication').querySelectorAll('select[name^=rule_crm_campaign_id_], select[name^=rule_group_rule_crm_campaign_id_]')].forEach(function(select){
+		  select.value = [...select.querySelectorAll('option')].find(el => el.textContent.toLowerCase() === campaignName.toLowerCase()).value;
+		  select.dispatchEvent(new Event('change'));
+		})
+	})();
+</script></textarea>
+	</main>
+	<footer class="container py-4">
+		Made with ❤️ - <a href="https://github.com/stuartajd/matoolbox" class="link-info" target="_blank">see the project on GitHub</a>
+	</footer>
+</body>
+</html>
