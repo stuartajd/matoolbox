@@ -39,16 +39,14 @@
 		</p>
 		
 		<textarea class="form-control disable-resize" @click="(event) => event.target.select()" readonly rows="10">
-<script>
-	(function() {
-		const campaignName = 'Salesforce campaign name';
+(function() {
+	const campaignName = 'Salesforce campaign name';
 
-		[...$0.closest('body.frontendApplication').querySelectorAll('select[name^=rule_crm_campaign_id_], select[name^=rule_group_rule_crm_campaign_id_]')].forEach(function(select){
-		  select.value = [...select.querySelectorAll('option')].find(el => el.textContent.toLowerCase() === campaignName.toLowerCase()).value;
-		  select.dispatchEvent(new Event('change'));
-		})
-	})();
-</script></textarea>
+	[...$0.closest('body.frontendApplication').querySelectorAll('select[name^=rule_crm_campaign_id_], select[name^=rule_group_rule_crm_campaign_id_]')].forEach(function(select){
+	  select.value = [...select.querySelectorAll('option')].find(el => el.textContent.toLowerCase() === campaignName.toLowerCase()).value;
+	  select.dispatchEvent(new Event('change'));
+	})
+})();</textarea>
 	</main>
 	<footer class="container py-4">
 		Made with ❤️ - <a href="https://github.com/stuartajd/matoolbox" class="link-info" target="_blank">see the project on GitHub</a>
